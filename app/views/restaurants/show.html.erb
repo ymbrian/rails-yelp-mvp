@@ -1,7 +1,38 @@
-<h2><%= @restaurant.name %></h2>
-<p><%= @restaurant.address %></p>
-<p><%= @restaurant.phone_number %></p>
-<p><%= @restaurant.category.capitalize %></p>
+<% content_for(:title) do %>
+  <%= @restaurant.name %> is on yelp
+<% end %>
 
-<%= link_to "Return", restaurants_path %>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2 col-md-8">
+      <h2><%= @restaurant.name %></h2>
+      <p><%= @restaurant.address %></p>
+      <p><%= @restaurant.phone_number %></p>
+      <p><%= @restaurant.category.capitalize %></p>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col-xs-12 col-md-offset-2 col-md-8">
+      <h3>Reviews</h3>
+      <table class="table table-condensed restaurant-reviews-table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @restaurant.reviews.each do |review| %>
+            <tr>
+              <td><%= review.content %></td>
+              <td><%= review.rating %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<%= link_to "Add Review", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+<%= link_to "Return", restaurants_path, class: "btn btn-danger" %>
